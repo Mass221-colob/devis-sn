@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Devis sécurisé</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+
+/* LOGIN PREMIUM */
+#login{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f0f0f,#2c2c2c);
+}
+
+.login-card{
+background:white;
+padding:35px;
+border-radius:15px;
+width:360px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+#login input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+#login button{
+width:100%;
+padding:12px;
+background:black;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+font-weight:bold;
+}
+
+.whatsapp{
+background:#25D366 !important;
+}
+
+.contact{
+margin-top:20px;
+font-size:14px;
+color:#444;
+}
+
+#error{color:red;margin-top:10px}
+
+/* APP */
+#app{display:none}
+
+/* DEVIS */
+#devis{
+ width:210mm;min-height:297mm;margin:auto;
+ background:#f7efe5;padding:20mm;
+ box-sizing:border-box;display:flex;flex-direction:column;
+}
+
+.top{display:flex;justify-content:space-between}
+.logo img{max-width:120px}
+.title{font-size:40px;font-weight:bold}
+.meta{text-align:right}
+
+.company-info{margin-top:10px;font-size:14px;}
+
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th{background:black;color:white}
+th,td{padding:10px;border-bottom:1px solid #ccc;text-align:center}
+
+.total-box{text-align:right;margin-top:20px;font-weight:bold}
+
+.signature{display:flex;justify-content:space-between;margin-top:40px}
+.sig{width:45%;text-align:center;position:relative}
+
+canvas{border:1px solid #000;background:#fff}
+.line{border-top:1px solid black;margin-top:60px}
+
+#stampPreview{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%) rotate(-10deg);
+width:120px;
+opacity:0.7;
+mix-blend-mode:multiply;
+}
+
+.footer{text-align:center;margin-top:auto;font-weight:bold}
+
+.no-print{}
+
+@media print{
+.no-print{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+<div class="login-card">
+
+<h2>Connexion sécurisée</h2>
+
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Mot de passe">
+
+<button onclick="login()">Accéder à l'application</button>
+
+<p id="error"></p>
+
+<div class="contact">
+<p><strong>Accès privé</strong></p>
+<p>Pour obtenir un accès :</p>
+
+<p><strong>Contactez MassambaTech</strong></p>
+
+<p>📞 221781238766</p>
+<p>📧 client221@gmail.com</p>
+
+<button class="whatsapp" onclick="openWhatsApp()">
+💬 Contacter sur WhatsApp
+</button>
+</div>
+
+</div>
+</div>
+
+<div id="app">
+
+<div id="devis">
+
+<div class="top">
+<div class="logo">
+<input type="file" class="no-print" onchange="loadLogo(event)">
+<img id="logoPreview">
+</div>
+
+<div>
+<div class="title" contenteditable="true">DEVIS</div>
+<p contenteditable="true">Nom Entreprise</p>
+
+<div class="company-info" contenteditable="true">
+📍 Adresse : Votre adresse<br>
+📞 Téléphone : +221 XX XXX XX XX<br>
+📧 Email : entreprise@email.com
+</div>
+</div>
+
+<div class="meta">
+<p>N° 0001</p>
+<p id="date"></p>
+<p contenteditable="true">Client</p>
+</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Prix</th>
+<th>Qté</th>
+<th>Total</th>
+<th class="no-print"></th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+
+<button class="no-print" onclick="addRow()">+ Ajouter</button>
+
+<div class="total-box">
+Total : <span id="total">0</span>
+</div>
+
+<div class="signature">
+
+<div class="sig">
+<p>Signature Entreprise</p>
+<canvas id="signaturePad" width="300" height="120"></canvas><br>
+
+<input type="file" class="no-print" onchange="loadStamp(event)">
+<img id="stampPreview">
+
+<br>
+<button class="no-print" onclick="clearCanvas()">Effacer</button>
+</div>
+
+<div class="sig">
+<p>Signature Client</p>
+<div class="line"></div>
+</div>
+
+</div>
+
+<div class="footer">
+MERCI DE VOTRE CONFIANCE
+</div>
+
+</div>
+
+<div class="no-print" style="text-align:center;margin:20px;">
+<button onclick="window.print()">Télécharger PDF</button>
+</div>
+
+</div>
+
+<script>
+function login(){
+let email=document.getElementById("email").value.trim();
+let password=document.getElementById("password").value.trim();
+
+if(email==="client221@gmail.com" && password==="Massamba2000@"){
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+}else{
+document.getElementById("error").innerText="Email ou mot de passe incorrect";
+}
+}
+
+function openWhatsApp(){
+window.open("https://wa.me/221781238766","_blank");
+}
+
+document.getElementById("date").innerText="Date : "+new Date().toLocaleDateString('fr-FR');
+
+function addRow(){
+let row=document.createElement("tr");
+row.innerHTML=`
+<td contenteditable="true">Service</td>
+<td contenteditable="true" class="prix">0</td>
+<td contenteditable="true" class="qty">1</td>
+<td class="total">0</td>
+<td class="no-print"><button onclick="deleteRow(this)">X</button></td>`;
+document.getElementById("tbody").appendChild(row);
+}
+
+function deleteRow(btn){
+btn.parentElement.parentElement.remove();calculate();
+}
+
+document.addEventListener("input",calculate);
+
+function calculate(){
+let total=0;
+document.querySelectorAll("#tbody tr").forEach(r=>{
+let p=parseFloat(r.querySelector(".prix").innerText)||0;
+let q=parseFloat(r.querySelector(".qty").innerText)||0;
+let t=p*q;
+r.querySelector(".total").innerText=t;
+total+=t;
+});
+document.getElementById("total").innerText=total;
+}
+
+function loadLogo(e){
+document.getElementById("logoPreview").src=URL.createObjectURL(e.target.files[0]);
+}
+
+function loadStamp(e){
+let file=e.target.files[0];
+if(file){
+document.getElementById("stampPreview").src=URL.createObjectURL(file);
+}
+}
+
+const canvas=document.getElementById("signaturePad");
+const ctx=canvas.getContext("2d");
+let drawing=false;
+
+canvas.onmousedown=()=>drawing=true;
+canvas.onmouseup=()=>{drawing=false;ctx.beginPath();};
+canvas.onmousemove=e=>{
+if(!drawing)return;
+ctx.lineWidth=2.5;
+ctx.lineCap="round";
+ctx.lineTo(e.offsetX,e.offsetY);
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(e.offsetX,e.offsetY);
+};
+
+function clearCanvas(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+addRow();
+</script>
+
+</body>
+</html>
