@@ -229,16 +229,23 @@ canvas{
   touch-action:none;
   border-radius:4px;
 }
+.canvas-wrap{
+  position:relative;
+  display:inline-block;
+  width:100%;
+}
 .stamp-wrap{margin-top:8px}
 .stamp-wrap input[type="file"]{font-size:12px}
 #stampPreview{
-  display:block;
-  margin:8px auto 0;
-  max-width:110px;
-  max-height:90px;
+  position:absolute;
+  bottom:8px;
+  left:50%;
+  transform:translateX(-50%) rotate(-12deg);
+  width:110px;
+  height:auto;
   opacity:0.75;
-  transform:rotate(-10deg);
   mix-blend-mode:multiply;
+  pointer-events:none;
 }
 .clear-btn{
   margin-top:8px;
@@ -331,7 +338,7 @@ canvas{
       <p>Pour obtenir un accès :</p>
       <p><strong>Contactez MassambaTech</strong></p>
       <p>📞 221 78 123 87 66</p>
-      <p>📧 massd432@gmail.com</p>
+      <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8de0ecfefee9b9bebfcdeae0ece4e1a3eee2e0">[email&#160;protected]</a></p>
       <button class="btn-wa" onclick="window.open('https://wa.me/221781238766','_blank')">
         💬 Contacter sur WhatsApp
       </button>
@@ -357,7 +364,7 @@ canvas{
         <div class="company-info" contenteditable="true">
           📍 Adresse : Votre adresse<br>
           📞 Téléphone : +221 XX XXX XX XX<br>
-          📧 Email : entreprise@email.com
+          📧 Email : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92f7fce6e0f7e2e0fbe1f7d2f7fff3fbfebcf1fdff">[email&#160;protected]</a>
         </div>
       </div>
 
@@ -394,12 +401,13 @@ canvas{
     <div class="signature">
       <div class="sig">
         <p>Signature Entreprise</p>
-        <canvas id="signaturePad"></canvas>
-        <div class="stamp-wrap no-print">
-          <input type="file" accept="image/*" onchange="loadStamp(event)" title="Charger un cachet">
+        <div class="canvas-wrap">
+          <canvas id="signaturePad"></canvas>
           <img id="stampPreview" alt="">
-          <br>
-          <button class="clear-btn" onclick="clearCanvas()">Effacer la signature</button>
+        </div>
+        <div class="stamp-wrap no-print" style="margin-top:8px">
+          <input type="file" accept="image/*" onchange="loadStamp(event)" title="Charger un cachet">
+          <button class="clear-btn" onclick="clearCanvas()" style="margin-left:8px">Effacer</button>
         </div>
       </div>
 
@@ -421,7 +429,7 @@ canvas{
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ===== CONNEXION ===== */
 function login(){
   const email = document.getElementById("email").value.trim();
@@ -538,16 +546,4 @@ function initCanvas(){
   canvas.addEventListener("mousedown", startDraw);
   canvas.addEventListener("mousemove", draw);
   canvas.addEventListener("mouseup", stopDraw);
-  canvas.addEventListener("mouseleave", stopDraw);
-  canvas.addEventListener("touchstart", startDraw, {passive: false});
-  canvas.addEventListener("touchmove", draw, {passive: false});
-  canvas.addEventListener("touchend", stopDraw);
-
-  window.clearCanvas = function(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  };
-}
-</script>
-
-</body>
-</html>
+  canv
