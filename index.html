@@ -49,15 +49,15 @@ body{font-family:Arial,sans-serif;background:#f0f0f0}
 #devis{
   width:820px;flex-shrink:0;background:white;
   border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.12);
-  padding:32px 32px 0;
+  padding:28px 32px 0;
   display:flex;flex-direction:column;
   min-height:1060px;
   transform-origin:top center;
 }
 
-/* ── TITRE ── */
+/* ── TITRE DEVIS ── */
 .devis-title-bar{
-  text-align:center;margin-bottom:18px;
+  text-align:center;margin-bottom:16px;
   border-bottom:3px solid #111;padding-bottom:10px;
 }
 .devis-title-bar .title{
@@ -66,18 +66,89 @@ body{font-family:Arial,sans-serif;background:#f0f0f0}
 
 /* ── EN-TÊTE 3 colonnes ── */
 .header{
-  display:grid;grid-template-columns:1fr 2fr 1fr;
-  gap:16px;align-items:start;margin-bottom:16px;
+  display:grid;
+  grid-template-columns:130px 1fr 160px;
+  gap:16px;
+  align-items:center;
+  margin-bottom:16px;
 }
-.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:6px;}
-.logo-block img{max-width:130px;max-height:85px;object-fit:contain;display:block;}
-.company-block{text-align:center;}
-.company-block .company-name{font-size:17px;font-weight:bold;color:#111;outline:none;margin-bottom:6px;}
-.company-block .company-info{font-size:13px;line-height:1.9;color:#444;outline:none;}
+
+/* Colonne logo */
+.logo-block{
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+}
+.logo-block img{
+  max-width:130px;max-height:90px;
+  object-fit:contain;display:block;
+}
+
+/* ══ BLOC ENTREPRISE — fidèle à la capture ══ */
+.company-block{
+  text-align:center;
+  line-height:1.0;
+}
+
+/* Ligne 1 : nom principal — très gros, gras italique */
+.company-main-name{
+  font-family:'Arial Black','Arial',sans-serif;
+  font-size:28px;
+  font-weight:900;
+  font-style:italic;
+  color:#000;
+  letter-spacing:0.5px;
+  margin-bottom:8px;
+  display:block;
+}
+
+/* Ligne 2 : adresse — gras, taille moyenne */
+.company-adresse{
+  font-family:'Arial',sans-serif;
+  font-size:13px;
+  font-weight:800;
+  color:#000;
+  display:block;
+  margin-bottom:4px;
+  text-transform:uppercase;
+}
+
+/* Ligne 3 : activité — gras, même taille */
+.company-activite{
+  font-family:'Arial',sans-serif;
+  font-size:12px;
+  font-weight:800;
+  color:#000;
+  display:block;
+  margin-bottom:4px;
+  text-transform:uppercase;
+}
+
+/* Ligne 4 : téléphones — gras */
+.company-tel{
+  font-family:'Arial',sans-serif;
+  font-size:12px;
+  font-weight:800;
+  color:#000;
+  display:block;
+  margin-bottom:4px;
+}
+
+/* Ligne 5 : adresse complète + RC — petit, gras */
+.company-rc{
+  font-family:'Arial',sans-serif;
+  font-size:9.5px;
+  font-weight:800;
+  color:#000;
+  display:block;
+  text-transform:uppercase;
+  letter-spacing:0.2px;
+}
+
+/* Colonne méta droite */
 .meta{text-align:right;}
-.meta p{font-size:13px;margin:4px 0;color:#333;outline:none;}
+.meta p{font-size:13px;margin:5px 0;color:#333;outline:none;}
 .meta p strong{font-weight:bold;}
-.header-divider{border:none;border-top:1px solid #ccc;margin-bottom:20px;}
+
+.header-divider{border:none;border-top:1px solid #bbb;margin-bottom:20px;}
 
 /* ── TABLEAU ── */
 .table-wrap{overflow-x:auto;}
@@ -151,9 +222,13 @@ canvas{border:1px solid #000;background:#fff;width:100%;height:120px;display:blo
   .no-print{display:none!important;}
   #app{padding:0;min-height:auto;}
   .scale-wrap{overflow:visible;}
-  #devis{box-shadow:none;border-radius:0;padding:12mm 14mm 0;width:100%;transform:none!important;min-height:267mm;}
+  #devis{
+    box-shadow:none;border-radius:0;
+    padding:10mm 12mm 0;width:100%;
+    transform:none!important;min-height:267mm;
+  }
   .actions{display:none;}
-  #stampPreview{display:block!important;opacity:0.75;}
+  #stampPreview{opacity:0.75;}
 }
 </style>
 </head>
@@ -198,7 +273,7 @@ canvas{border:1px solid #000;background:#fff;width:100%;height:120px;display:blo
       <!-- 2. EN-TÊTE -->
       <div class="header">
 
-        <!-- Logo : par défaut logo.png, remplaçable via file input -->
+        <!-- Logo -->
         <div class="logo-block">
           <input type="file" class="no-print" accept="image/*"
                  onchange="loadLogo(event)" title="Changer le logo">
@@ -206,16 +281,16 @@ canvas{border:1px solid #000;background:#fff;width:100%;height:120px;display:blo
                onerror="this.style.display='none'">
         </div>
 
+        <!-- Bloc entreprise fidèle à la capture -->
         <div class="company-block">
-          <div class="company-name" contenteditable="true">DAROU KHOUDOSS ALUMINIUM</div>
-          <div class="company-info" contenteditable="true">
-            📍 Adresse : KEUR SERIGNE TOUBA<br>
-            TOUT TRAVAUX EN MENUISIER ALUMINIUM / METALLIQUE ET BOIS<br>
-            📞 TEL : 77 555 52 61 / 76 420 63 73 / 33 801 27 04<br>
-            📧 Email : darou-khoudoss-aluminium@gmail.com
-          </div>
+          <span class="company-main-name" contenteditable="true">DAROU KHOUDOSS ALUMINIUM</span>
+          <span class="company-adresse" contenteditable="true">KEUR SERIGNE TOUBA</span>
+          <span class="company-activite" contenteditable="true">TOUT TRAVAUX EN MENUISIER ALUMINIUM / MÉTALLIQUE et bois<br>FOURNITURE ET Poses</span>
+          <span class="company-tel" contenteditable="true">TEL : 77 555 52 61 / 76 420 63 73 / 33 801 27 04</span>
+          <span class="company-rc" contenteditable="true">ADRESSE : GRAND MEDINE VI VILLA N°721 DAKAR/SENEGAL — RC : SN DKR 2023 A47211 — NINEA 011030997</span>
         </div>
 
+        <!-- Méta droite -->
         <div class="meta">
           <p contenteditable="true"><strong>N°</strong> 0001</p>
           <p id="date"></p>
@@ -251,7 +326,6 @@ canvas{border:1px solid #000;background:#fff;width:100%;height:120px;display:blo
           <p>Signature Entreprise</p>
           <div class="canvas-wrap">
             <canvas id="signaturePad"></canvas>
-            <!-- Tampon : par défaut tampon.png, remplaçable via file input -->
             <img id="stampPreview" src="tampon.png" alt="Tampon"
                  onerror="this.style.display='none'">
           </div>
@@ -347,7 +421,7 @@ function calculate(){
   document.getElementById("total").innerText=total.toLocaleString('fr-FR');
 }
 
-/* ══ LOGO : remplace par fichier choisi, sinon garde logo.png ══ */
+/* ══ LOGO ══ */
 function loadLogo(e){
   const file=e.target.files[0];
   if(!file)return;
@@ -356,7 +430,7 @@ function loadLogo(e){
   img.style.display="block";
 }
 
-/* ══ TAMPON : remplace par fichier choisi, sinon garde tampon.png ══ */
+/* ══ TAMPON ══ */
 function loadStamp(e){
   const file=e.target.files[0];
   if(!file)return;
@@ -416,9 +490,8 @@ async function partagerWhatsApp(){
     await new Promise(r=>setTimeout(r,120));
 
     const canvas=await html2canvas(devis,{
-      scale:2,useCORS:true,
-      backgroundColor:"#ffffff",logging:false,
-      allowTaint:true   /* permet de capturer logo.png et tampon.png locaux */
+      scale:2,useCORS:true,allowTaint:true,
+      backgroundColor:"#ffffff",logging:false
     });
 
     document.querySelectorAll(".no-print").forEach(el=>el.style.visibility="");
@@ -438,13 +511,11 @@ async function partagerWhatsApp(){
 
     overlay.classList.remove("active");
 
-    /* Mobile : partage natif avec fichier */
     if(navigator.canShare&&navigator.canShare({files:[pdfFile]})){
-      await navigator.share({title:"Devis DAROU KHOUDOSS",text:texte,files:[pdfFile]});
+      await navigator.share({title:"Devis DAROU KHOUDOSS ALUMINIUM",text:texte,files:[pdfFile]});
       return;
     }
 
-    /* Desktop : télécharge + ouvre WhatsApp Web */
     const url=URL.createObjectURL(pdfBlob);
     const a=document.createElement("a");
     a.href=url;a.download="devis.pdf";a.click();
