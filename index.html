@@ -51,21 +51,22 @@ body{font-family:Arial,sans-serif;background:#f0f0f0}
 .devis-title-bar .title{font-size:48px;font-weight:bold;letter-spacing:6px;color:#111;outline:none}
 
 /* EN-TETE 3 colonnes */
-.header{display:grid;grid-template-columns:130px 1fr 160px;gap:16px;align-items:center;margin-bottom:16px}
-.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-.logo-block img{max-width:130px;max-height:90px;object-fit:contain;display:block}
+.header{display:grid;grid-template-columns:120px 1fr 160px;gap:12px;align-items:start;margin-bottom:16px}
+.logo-block{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.logo-block input[type=file]{font-size:10px;max-width:120px}
+.logo-block img{max-width:120px;max-height:80px;object-fit:contain;display:block}
 
 /* BLOC ENTREPRISE */
-.company-block{text-align:center;line-height:1.1}
-.company-main-name{font-family:'Arial Black','Arial',sans-serif;font-size:26px;font-weight:900;font-style:italic;color:#000;letter-spacing:0.5px;margin-bottom:8px;display:block;white-space:nowrap}
-.company-adresse{font-size:13px;font-weight:800;color:#000;display:block;margin-bottom:4px;text-transform:uppercase}
-.company-activite{font-size:12px;font-weight:800;color:#000;display:block;margin-bottom:4px;text-transform:uppercase}
-.company-tel{font-size:12px;font-weight:800;color:#000;display:block;margin-bottom:4px}
-.company-rc{font-size:9.5px;font-weight:800;color:#000;display:block;text-transform:uppercase;letter-spacing:0.2px}
+.company-block{text-align:center;line-height:1.2;min-width:0;overflow:hidden}
+.company-main-name{font-family:'Arial Black','Arial',sans-serif;font-size:20px;font-weight:900;font-style:italic;color:#000;letter-spacing:0.3px;margin-bottom:6px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.company-adresse{font-size:12px;font-weight:800;color:#000;display:block;margin-bottom:3px;text-transform:uppercase}
+.company-activite{font-size:11px;font-weight:800;color:#000;display:block;margin-bottom:3px;text-transform:uppercase}
+.company-tel{font-size:11px;font-weight:800;color:#000;display:block;margin-bottom:3px}
+.company-rc{font-size:8.5px;font-weight:800;color:#000;display:block;text-transform:uppercase;letter-spacing:0.1px}
 
 /* META DROITE */
-.meta{text-align:right}
-.meta p{font-size:13px;margin:5px 0;color:#333;outline:none}
+.meta{text-align:right;min-width:0}
+.meta p{font-size:12px;margin:4px 0;color:#333;outline:none;word-break:break-word;overflow-wrap:break-word}
 .meta p strong{font-weight:bold}
 .header-divider{border:none;border-top:1px solid #bbb;margin-bottom:20px}
 
@@ -200,7 +201,10 @@ canvas{border:1px solid #ddd;background:#fff;width:100%;height:120px;display:blo
       <!-- EN-TETE -->
       <div class="header">
         <div class="logo-block">
-          <input type="file" class="no-print" accept="image/*" onchange="loadLogo(event)">
+          <label class="no-print" style="font-size:10px;color:#888;cursor:pointer;display:block;margin-bottom:3px">
+            <input type="file" accept="image/*" onchange="loadLogo(event)" style="display:none">
+            Changer logo
+          </label>
           <img id="logoPreview" src="logo.png" alt="Logo" onerror="this.style.display='none'">
         </div>
 
@@ -262,7 +266,6 @@ canvas{border:1px solid #ddd;background:#fff;width:100%;height:120px;display:blo
         </div>
         <div class="sig">
           <p>Signature Client</p>
-          <div class="sig-line">Signer ici</div>
         </div>
       </div>
 
