@@ -46,15 +46,25 @@ body{font-family:Arial,sans-serif;background:#f0f0f0}
   transform-origin:top center;
 }
 
-/* EN-TETE (style TECHNALU) */
-.entete{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px}
-.lbloc{display:flex;flex-direction:column;gap:5px}
-.lbloc input[type=file]{font-size:10px;max-width:150px}
-.lbloc img{max-width:150px;max-height:110px;object-fit:contain;display:block}
-.ltxt{font-size:20px;font-weight:900;font-style:italic;font-family:'Arial Black','Arial',sans-serif;color:#111;letter-spacing:.5px;display:none}
-.meta-right{text-align:right;min-width:200px}
-.dlieu{font-size:13px;color:#222;padding-top:4px;outline:none}
-.meta-right p{font-size:13px;margin:6px 0 0;color:#222;outline:none}
+/* EN-TETE (style TECHNALU + bloc entreprise centre) */
+.entete{display:grid;grid-template-columns:130px 1fr 170px;gap:12px;align-items:start;margin-bottom:26px}
+.lbloc{display:flex;flex-direction:column;gap:5px;min-width:0}
+.lbloc input[type=file]{font-size:10px;max-width:125px}
+.lbloc img{max-width:125px;max-height:95px;object-fit:contain;display:block}
+.ltxt{font-size:14px;font-weight:900;font-style:italic;font-family:'Arial Black','Arial',sans-serif;color:#111;letter-spacing:.3px;display:none}
+
+/* BLOC ENTREPRISE CENTRE (elements devis DAROU) */
+.company-block{text-align:center;line-height:1.2;min-width:0;overflow:hidden}
+.company-main-name{font-family:'Arial Black','Arial',sans-serif;font-size:20px;font-weight:900;font-style:italic;color:#000;letter-spacing:0.3px;margin-bottom:6px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.company-adresse{font-size:12px;font-weight:800;color:#000;display:block;margin-bottom:3px;text-transform:uppercase}
+.company-activite{font-size:11px;font-weight:800;color:#000;display:block;margin-bottom:3px;text-transform:uppercase}
+.company-tel{font-size:11px;font-weight:800;color:#000;display:block;margin-bottom:3px}
+.company-rc{font-size:8.5px;font-weight:800;color:#000;display:block;text-transform:uppercase;letter-spacing:0.1px}
+
+/* META DROITE (date + numero) */
+.meta-right{text-align:right;min-width:0}
+.dlieu{font-size:13px;color:#222;padding-top:4px;outline:none;word-break:break-word}
+.meta-right p{font-size:13px;margin:6px 0 0;color:#222;outline:none;word-break:break-word}
 .meta-right p strong{font-weight:bold}
 
 /* TITRE CENTRE SOULIGNE (style TECHNALU) */
@@ -191,7 +201,7 @@ canvas{border:none;background:#fff;width:100%;height:120px;display:block;touch-a
   <div class="scale-wrap">
     <div id="devis">
 
-      <!-- EN-TETE (style TECHNALU : logo a gauche, date/N a droite) -->
+      <!-- EN-TETE : logo | bloc entreprise centre | date + numero -->
       <div class="entete">
         <div class="lbloc">
           <input type="file" class="no-print" accept="image/*" onchange="loadLogo(event)">
@@ -199,6 +209,15 @@ canvas{border:none;background:#fff;width:100%;height:120px;display:block;touch-a
                onerror="this.style.display='none';document.querySelector('.ltxt').style.display='block'">
           <div class="ltxt">DAROU KHOUDOSS ALUMINIUM</div>
         </div>
+
+        <div class="company-block">
+          <span class="company-main-name" contenteditable="true">DAROU KHOUDOSS ALUMINIUM</span>
+          <span class="company-adresse" contenteditable="true">KEUR SERIGNE TOUBA</span>
+          <span class="company-activite" contenteditable="true">TOUT TRAVAUX EN MENUISIER ALUMINIUM / METALLIQUE et bois<br>FOURNITURE ET Poses</span>
+          <span class="company-tel" contenteditable="true">TEL : 77 555 52 61 / 76 420 63 73 / 33 801 27 04</span>
+          <span class="company-rc" contenteditable="true">ADRESSE : GRAND MEDINE VI VILLA N721 DAKAR/SENEGAL - RC : SN DKR 2023 A47211 - NINEA 011030997</span>
+        </div>
+
         <div class="meta-right">
           <div class="dlieu" contenteditable="true" id="dlieu">Dakar le ...</div>
           <p contenteditable="true"><strong>N</strong> 0001</p>
@@ -348,7 +367,7 @@ function initApp() {
   setTimeout(scaleDevis, 60);
 }
 
-/* ── SCALE ── */
+/* ── SCALE (rendu mobile identique) ── */
 function scaleDevis() {
   var d = document.getElementById("devis");
   var w = document.querySelector(".scale-wrap");
