@@ -70,24 +70,25 @@ body{font-family:Arial,sans-serif;background:#f0f0f0}
 .meta p strong{font-weight:bold}
 .header-divider{border:none;border-top:1px solid #bbb;margin-bottom:20px}
 
-/* TABLEAU */
+/* TABLEAU (style TECHNALU) */
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;border:2px solid #111}
-th{background:#111;color:white;font-size:13px;padding:10px 12px;border:1.5px solid #111;text-align:center}
-td{padding:9px 12px;border:1.5px solid #111;text-align:center;font-size:13px;color:#222}
-td.desc-col{text-align:left}
-td[contenteditable]{outline:none;cursor:text;transition:background .15s}
-td[contenteditable]:focus{background:#fffde7}
+table.mt{width:100%;border-collapse:collapse;border:2px solid #111}
+table.mt th{background:#fff;color:#111;font-size:11.5px;font-weight:900;padding:9px 7px;border:1.5px solid #111;text-align:center;text-transform:uppercase;vertical-align:middle;line-height:1.3}
+table.mt td{padding:9px 7px;border:1px solid #666;font-size:13px;color:#111;vertical-align:middle;text-align:center}
+table.mt td.desc{text-align:left}
+table.mt td.refn{font-weight:700;color:#111;font-size:12px}
+table.mt td[contenteditable]{outline:none;cursor:text;transition:background .15s}
+table.mt td[contenteditable]:focus{background:#fffde7}
+table.mt tfoot td{font-weight:900;font-size:14px;border:2px solid #111;padding:11px 8px}
+table.mt tfoot .ltot{text-align:left;letter-spacing:.3px}
+table.mt tfoot .vtot{text-align:center;font-size:15px}
 .del-btn{background:#e74c3c;color:white;border:none;border-radius:4px;padding:3px 9px;cursor:pointer;font-size:12px;font-weight:bold}
 .del-btn:hover{background:#c0392b}
 .add-btn{margin-top:10px;padding:8px 18px;background:#111;color:white;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:bold;transition:background .2s}
 .add-btn:hover{background:#333}
 
-/* TOTAL */
-.total-box{text-align:right;margin-top:14px;font-weight:bold;font-size:16px;color:#111;padding:10px 0;}
-
 /* MONTANT EN LETTRES */
-.montant-lettres{margin-top:12px;font-size:13px;color:#111;line-height:1.7;font-style:italic;padding:10px 12px;border:1px solid #ddd;border-radius:6px;background:#fafafa}
+.montant-lettres{margin-top:16px;font-size:13px;color:#111;line-height:1.7;font-style:italic;padding:10px 12px;border:1px solid #ddd;border-radius:6px;background:#fafafa}
 .montant-lettres strong{font-style:normal}
 
 /* SIGNATURES */
@@ -225,25 +226,32 @@ canvas{border:none;background:#fff;width:100%;height:120px;display:block;touch-a
 
       <hr class="header-divider">
 
-      <!-- TABLEAU -->
+      <!-- TABLEAU (style TECHNALU) -->
       <div class="table-wrap">
-        <table>
+        <table class="mt">
           <thead>
             <tr>
-              <th>Description</th>
-              <th>Prix unitaire</th>
-              <th>Qte</th>
-              <th>Total</th>
-              <th class="no-print" style="width:44px;border:none;background:#555"></th>
+              <th style="width:6%">Ref.</th>
+              <th style="width:21%">Designation</th>
+              <th style="width:12%">Dimension</th>
+              <th style="width:16%">Remplissage</th>
+              <th style="width:8%">QTE</th>
+              <th style="width:14%">Prix Unitaire (CFA)</th>
+              <th style="width:14%">Prix Total (CFA)</th>
+              <th style="width:28px" class="no-print"></th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="ltot" colspan="6">TOTAL GENERAL HTVA</td>
+              <td class="vtot" id="total">0</td>
+              <td class="no-print" style="border:none"></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
       <button class="add-btn no-print" onclick="addRow()">+ Ajouter une ligne</button>
-
-      <!-- TOTAL -->
-      <div class="total-box">Total : <span id="total">0</span> FCFA</div>
 
       <!-- MONTANT EN LETTRES -->
       <div class="montant-lettres">
@@ -362,13 +370,17 @@ function scaleDevis() {
 }
 window.addEventListener("resize", scaleDevis);
 
-/* ── LIGNES ── */
+/* ── LIGNES (style TECHNALU) ── */
 window.addRow = function() {
+  var n = document.querySelectorAll("#tbody tr").length + 1;
   var row = document.createElement("tr");
   row.innerHTML =
-    '<td class="desc-col" contenteditable="true">Description du service</td>' +
-    '<td contenteditable="true" class="prix">0</td>' +
+    '<td class="refn">' + n + '</td>' +
+    '<td class="desc" contenteditable="true">Description</td>' +
+    '<td contenteditable="true">-</td>' +
+    '<td contenteditable="true">-</td>' +
     '<td contenteditable="true" class="qty">1</td>' +
+    '<td contenteditable="true" class="prix">0</td>' +
     '<td class="total-col">0</td>' +
     '<td class="no-print" style="border:none;padding:3px">' +
       '<button class="del-btn" onclick="deleteRow(this)">X</button>' +
@@ -379,6 +391,10 @@ window.addRow = function() {
 
 window.deleteRow = function(btn) {
   btn.closest("tr").remove();
+  document.querySelectorAll("#tbody tr").forEach(function(r, i){
+    var e = r.querySelector(".refn");
+    if (e) e.innerText = i + 1;
+  });
   calculate();
 };
 
